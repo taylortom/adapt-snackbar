@@ -1,0 +1,35 @@
+@import 'colours';
+
+#snackbar {
+  padding: 8px 0 7px 0;
+  width: 100%;
+  top: 41px;
+  z-index: 499;
+  background-color: #9CABC4;
+  color: white;
+  font-size: 110%;
+  text-align: center;
+
+  &.alert { background-color: @warning-color; }
+  &.info { background-color: @info-color; }
+  &.error {
+    background-color: @alert-color;
+    // to override existing styles
+    left: inherit;
+    position: inherit;
+  }
+
+  .body {
+    display: inline-block;
+  }
+
+  .close {
+    display: none;
+    padding-left: 15px;
+    a {
+      font-weight: bold;
+      color: white;
+      font-size: 90%;
+    }
+  }
+}
