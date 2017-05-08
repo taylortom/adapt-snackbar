@@ -6,11 +6,17 @@ define(function(require) {
   var $el;
   var timer;
   var queue = [];
+  var defaults;
 
   var Snackbar = function(data) {
     if(typeof data === 'string') data = { text: data };
     // push to the queue, populating with defaults as we go
-    queue.push(_.extend({}, {
+    queue.push(_.extend({}, defaults, data));
+    if(queue.length === 1) processQueue();
+  };
+
+  var setDefaults = function() {
+    defaults = {
       type: 'info',
       text: '',
       buttonText: Origin.l10n.t('app.snackbarclosebutton'),
@@ -18,8 +24,7 @@ define(function(require) {
       animTime: 250,
       timeout: 3000,
       callback: null
-    }, data));
-    if(queue.length === 1) processQueue();
+    };
   };
 
   var render = function() {
@@ -54,6 +59,7 @@ define(function(require) {
   };
 
   Origin.on('origin:dataReady', function() {
+    setDefaults();
     Origin.Notify.register('snackbar', Snackbar);
     render();
     $('.close a', $el).click(closeSnack);
